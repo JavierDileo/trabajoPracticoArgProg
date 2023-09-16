@@ -1,0 +1,4 @@
+123,Juan Perez,Frontend
+118,Rosa Garcia,Java
+123,Juan Perez,Java
+115,Nayla Martinez,Python
