@@ -17,6 +17,7 @@ public class Menu {
         int opciones;
 
         do {
+            System.out.println("Datos del Mapa: \n" + Lectura.diccionarioEstudiantes);
             opciones = menuDeOpciones(sc);
 
             switch (opciones) {

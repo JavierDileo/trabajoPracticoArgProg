@@ -18,39 +18,44 @@ public class Lectura {
 
     public Lectura(String path)  {
         Lectura.path = path;
-        try{
-            FileReader fileReader = new FileReader(path);
-            BufferedReader bufferedReader = new BufferedReader(fileReader);
+        diccionarioEstudiantes = new HashMap<>();
+        leerArchivo();
+    }
 
+    private static void leerArchivo() {
+        try(FileReader fileReader = new FileReader(path);
+            BufferedReader bufferedReader = new BufferedReader(fileReader)){
             String linea;
-            diccionarioEstudiantes = new HashMap<>();
 
             while((linea = bufferedReader.readLine()) != null){
-                String[] estudiantes = linea.split(",");
-                int legajo = Integer.parseInt(estudiantes[0]);
-
-                if(diccionarioEstudiantes.containsKey(legajo)){
-                    Estudiante estudiante = Lectura.diccionarioEstudiantes.get(legajo);
-                    estudiante.agregarMateriasAprobadas(estudiantes[2]);
-
-                }else {
-
-                    Estudiante estudiante1 = new Estudiante(Integer.parseInt(estudiantes[0]) , estudiantes[1]);
-                    estudiante1.agregarMateriasAprobadas(estudiantes[2]);
-                    diccionarioEstudiantes.put(Integer.parseInt(estudiantes[0]) , estudiante1);
-                }
-
-
+                procesarLinea(linea);
             }
 
-            bufferedReader.close();
-
         }catch (IOException e){
-            System.out.println(e);
+            System.out.println("Error de lectura del archivo " + e);
         }
+    }
 
-        System.out.println(diccionarioEstudiantes);
+    private static void procesarLinea(String linea) {
+        String[] estudiantes = linea.split(",");
+        if(estudiantes.length >= 3){
+            int legajo = Integer.parseInt(estudiantes[0]);
+            String nombreApellido = estudiantes[1];
+            String materiaAprobada = estudiantes[2];
 
+            if(diccionarioEstudiantes.containsKey(legajo)){
+                Estudiante estudiante = Lectura.diccionarioEstudiantes.get(legajo);
+                estudiante.agregarMateriasAprobadas(materiaAprobada);
+
+            }else {
+
+                Estudiante nuevoEstudiante = new Estudiante(legajo , nombreApellido);
+                nuevoEstudiante.agregarMateriasAprobadas(materiaAprobada);
+                diccionarioEstudiantes.put(legajo , nuevoEstudiante);
+            }
+        }else{
+            System.out.println("Error: La linea no tiene suficientes datos para procesar " + linea);
+        }
     }
 
 
