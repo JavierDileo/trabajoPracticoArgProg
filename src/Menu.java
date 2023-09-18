@@ -5,7 +5,6 @@ import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.InputMismatchException;
 import java.util.Scanner;
-import java.util.regex.Pattern;
 
 public class Menu {
 
@@ -48,7 +47,7 @@ public class Menu {
                         }
                         bandera = true;
                         //SE IMPRIMEN LOS DATOS POR PANTALLA
-                        imprimirPorPantalla(estudiante);
+                        imprimir(estudiante);
 
                      //SI NO SE ENCUENTRA EL LEGAJO
                     } else {
@@ -67,7 +66,7 @@ public class Menu {
                         System.out.println("Estudiante registrado exitosamente.\n");
 
                         //SE IMPRIMEN LOS DATOS POR PANTALLA
-                        imprimirPorPantalla(estudiante);
+                        imprimir(estudiante);
 
                         //SE AGREGA AL DICCIONARIO EXISTENTE
                         Lectura.diccionarioEstudiantes.put(legajo, estudiante);
@@ -84,7 +83,7 @@ public class Menu {
         sc.close();
     }
 
-    private static void imprimirPorPantalla(Estudiante estudiante) {
+    private static void imprimir(Estudiante estudiante) {
         System.out.println();
         System.out.println("DATOS DEL ESTUDIANTE");
         System.out.println(estudiante.getLegajo() + " - " + estudiante.getNombreApellido() + " - " + estudiante.getMateriasAprobadas());
@@ -111,9 +110,9 @@ public class Menu {
                 System.out.println();
                 break;
 
-            } catch (InputMismatchException im) {
+            } catch (InputMismatchException e) {
                 sc.nextLine();//Limpia el buffer
-                System.out.println(im);
+                System.out.println(e);
                 System.out.println("Error: Ingresar solo numeros.");
                 System.out.println();
             }
