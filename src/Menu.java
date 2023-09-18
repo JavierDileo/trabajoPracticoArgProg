@@ -4,6 +4,7 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.Scanner;
+import java.util.regex.Pattern;
 
 public class Menu{
 
@@ -16,13 +17,10 @@ public class Menu{
         int opciones;
 
         do {
-            System.out.println("Menu");
-            System.out.println("1. Buscar estudiante por numero de legajo");
-            System.out.println("2. Salir");
-            opciones = sc.nextInt();
+            opciones = menuDeOpciones(sc);
 
             switch (opciones) {
-                case 1:
+                case 1 -> {
                     System.out.print("Ingrese el numero de legajo: ");
                     int legajo = sc.nextInt();
                     //VERIFICA SI ESTA EL LEGAJO EN EL DICCIONARIO
@@ -33,53 +31,72 @@ public class Menu{
                         while (bandera) {
                             System.out.println("Agregar materia (S/N)");
                             agregarMateria = sc.next();
-
+                            //CARGA DE LA NUEVA MATERIA APROBADA
                             if (agregarMateria.equalsIgnoreCase("s")) {
-                                String materiaAprobada = getMateriaAprobada("Ingrese la materia aprobada: ", sc);
+                                String materiaAprobada = getMateriaAprobada(sc);
                                 estudiante.agregarMateriasAprobadas(materiaAprobada);
+                                System.out.println("Materia " + materiaAprobada + " agregada exitosamente.\n");
+                                //CARGAR AL ARCHIVO TXT LA NUEVA CADENA
+                                cargarAlArchivo(estudiante);
                                 bandera = false;
-                            } else {
+                            }else{
                                 bandera = false;
                             }
 
                         }
-
-                        //REASIGNACION DE LA VARIABLE BANDERA A TRUE PARA QUE VUELVA A PEDIR SI QUIERE AGREGAR UNA
-                        // MATERIA APROBADA
                         bandera = true;
-
-                        //CARGAR AL ARCHIVO TXT LA NUEVA CADENA
-                        cargarAlArchivo(estudiante);
-
                         //SE IMPRIMEN LOS DATOS POR PANTALLA
-                        System.out.println("DATOS DEL ESTUDIANTE");
-                        System.out.println(estudiante.getLegajo() + " - " + estudiante.getNombreApellido() + " - " + estudiante.getMateriasAprobadas());
+                        imprimirPorPantalla(estudiante);
 
-                        //SI NO SE ENCUENTRA EL LEGAJO
+                     //SI NO SE ENCUENTRA EL LEGAJO
                     } else {
                         System.out.println("Ingrese el Nombre y Apellido del estudiante: ");
-                        String nombreApellido = sc.next();
-                        String materiaAprobada = getMateriaAprobada("Ingrese la materia aprobada: ", sc);
+                        //LIMPIA EL BUFFER DEL SCANNER
+                        sc.nextLine();
+
+                        String nombreApellido = sc.nextLine();
+                        String materiaAprobada = getMateriaAprobada(sc);
 
                         //AGREGA UN NUEVO ESTUDIANTE Y SU MATERIA APROBADA
                         Estudiante estudiante = new Estudiante(legajo, nombreApellido);
                         estudiante.agregarMateriasAprobadas(materiaAprobada);
+                        System.out.println("Estudiante registrado exitosamente.\n");
+
+                        //SE IMPRIMEN LOS DATOS POR PANTALLA
+                        imprimirPorPantalla(estudiante);
 
                         //SE AGREGA AL DICCIONARIO EXISTENTE
                         Lectura.diccionarioEstudiantes.put(legajo, estudiante);
 
+                        //CARGAR AL ARCHIVO TXT LA NUEVA CADENA
                         cargarAlArchivo(estudiante);
                     }
-                    break;
-                case 2:
-                    System.out.println("Has salido exitosamente");
-                    break;
-                default:
-                    System.out.println("Opcion no valida");
-                    break;
+                }
+                case 2 -> System.out.println("Has salido exitosamente");
+                default -> System.out.println("Opcion no valida\n");
+
             }
         } while (opciones !=2);
+        sc.close();
+    }
 
+    private static void imprimirPorPantalla(Estudiante estudiante) {
+        System.out.println();
+        System.out.println("DATOS DEL ESTUDIANTE");
+        System.out.println(estudiante.getLegajo() + " - " + estudiante.getNombreApellido() + " - " + estudiante.getMateriasAprobadas());
+        System.out.println();
+    }
+
+    private static int menuDeOpciones(Scanner sc) {
+        int opciones;
+        System.out.println("\t\tMenu\t\t");
+        System.out.println("Seleccione una opcion (1-2)");
+        System.out.println("1. Buscar estudiante por numero de legajo");
+        System.out.println("2. Salir");
+        System.out.print("Opcion: ");
+        opciones = sc.nextInt();
+        System.out.println();
+        return opciones;
     }
 
     private static void cargarAlArchivo(Estudiante estudiante) {
@@ -95,9 +112,9 @@ public class Menu{
         }
     }
 
-    private static String getMateriaAprobada(String s, Scanner sc) {
-        System.out.print(s);
-        String materiaAprobada = sc.next();
-        return materiaAprobada;
+    private static String getMateriaAprobada(Scanner sc) {
+        System.out.print("Ingrese la materia aprobada: ");
+        sc.nextLine();
+        return sc.nextLine();
     }
 }
