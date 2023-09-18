@@ -3,10 +3,11 @@
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.InputMismatchException;
 import java.util.Scanner;
 import java.util.regex.Pattern;
 
-public class Menu{
+public class Menu {
 
 
 
@@ -22,7 +23,8 @@ public class Menu{
             switch (opciones) {
                 case 1 -> {
                     System.out.print("Ingrese el numero de legajo: ");
-                    int legajo = sc.nextInt();
+                    int legajo = 0;
+                    legajo = validarNumeros(sc,"Ingrese el numero de legajo: ");
                     //VERIFICA SI ESTA EL LEGAJO EN EL DICCIONARIO
                     if (Lectura.diccionarioEstudiantes.containsKey(legajo)) {
                         Estudiante estudiante = Lectura.diccionarioEstudiantes.get(legajo);
@@ -88,15 +90,32 @@ public class Menu{
     }
 
     private static int menuDeOpciones(Scanner sc) {
-        int opciones;
         System.out.println("\t\tMenu\t\t");
         System.out.println("Seleccione una opcion (1-2)");
         System.out.println("1. Buscar estudiante por numero de legajo");
         System.out.println("2. Salir");
         System.out.print("Opcion: ");
-        opciones = sc.nextInt();
-        System.out.println();
+        int opciones = 0;
+        opciones = validarNumeros(sc, "Opcion: ");
         return opciones;
+    }
+
+    private static int validarNumeros(Scanner sc ,String str) {
+        int numero;
+        try {
+            numero = sc.nextInt();
+            System.out.println();
+
+        } catch (InputMismatchException im) {
+            sc.nextLine();
+            System.out.println(im);
+            System.out.println("Error. Ingresar numeros.");
+            System.out.println();
+            System.out.print(str);
+            numero = sc.nextInt();
+            System.out.println();
+        }
+        return numero;
     }
 
     private static void cargarAlArchivo(Estudiante estudiante) {
@@ -117,4 +136,8 @@ public class Menu{
         sc.nextLine();
         return sc.nextLine();
     }
+
+
+
+
 }
