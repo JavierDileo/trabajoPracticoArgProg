@@ -112,9 +112,9 @@ public class Menu {
                 break;
 
             } catch (InputMismatchException im) {
-                sc.nextLine();
+                sc.nextLine();//Limpia el buffer
                 System.out.println(im);
-                System.out.println("Error. Ingresar numeros.");
+                System.out.println("Error: Ingresar solo numeros.");
                 System.out.println();
             }
         }
