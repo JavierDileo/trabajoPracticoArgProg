@@ -22,7 +22,6 @@ public class Menu {
 
             switch (opciones) {
                 case 1 -> {
-                    System.out.print("Ingrese el numero de legajo: ");
                     int legajo = 0;
                     legajo = validarNumeros(sc,"Ingrese el numero de legajo: ");
                     //VERIFICA SI ESTA EL LEGAJO EN EL DICCIONARIO
@@ -97,7 +96,6 @@ public class Menu {
         System.out.println("Seleccione una opcion (1-2)");
         System.out.println("1. Buscar estudiante por numero de legajo");
         System.out.println("2. Salir");
-        System.out.print("Opcion: ");
         int opciones = 0;
         opciones = validarNumeros(sc, "Opcion: ");
         return opciones;
@@ -105,18 +103,20 @@ public class Menu {
 
     private static int validarNumeros(Scanner sc ,String str) {
         int numero;
-        try {
-            numero = sc.nextInt();
-            System.out.println();
+        while(true){
 
-        } catch (InputMismatchException im) {
-            sc.nextLine();
-            System.out.println(im);
-            System.out.println("Error. Ingresar numeros.");
-            System.out.println();
-            System.out.print(str);
-            numero = sc.nextInt();
-            System.out.println();
+            try {
+                System.out.print(str);
+                numero = sc.nextInt();
+                System.out.println();
+                break;
+
+            } catch (InputMismatchException im) {
+                sc.nextLine();
+                System.out.println(im);
+                System.out.println("Error. Ingresar numeros.");
+                System.out.println();
+            }
         }
         return numero;
     }
