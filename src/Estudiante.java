@@ -30,7 +30,7 @@ public class Estudiante {
 
 
   public  String cadena() {
-        String materias = null;
+      String materias = null;
         for (String materia: materiasAprobadas) {
             materias = materia ;
 
