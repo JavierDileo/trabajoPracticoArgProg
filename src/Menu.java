@@ -35,6 +35,7 @@ public class Menu {
                             agregarMateria = sc.next();
                             //CARGA DE LA NUEVA MATERIA APROBADA
                             if (agregarMateria.equalsIgnoreCase("s")) {
+                                sc.nextLine();
                                 String materiaAprobada = getMateriaAprobada(sc);
                                 estudiante.agregarMateriasAprobadas(materiaAprobada);
                                 System.out.println("Materia " + materiaAprobada + " agregada exitosamente.\n");
@@ -53,6 +54,7 @@ public class Menu {
                      //SI NO SE ENCUENTRA EL LEGAJO
                     } else {
                         System.out.println("El legajo " + legajo + " no se encuentra en el diccionario.");
+                        System.out.println("Genere el alta para el estudiante con legajo N° " + legajo);
                         System.out.println("Ingrese el Nombre y Apellido del estudiante: ");
                         //LIMPIA EL BUFFER DEL SCANNER
                         sc.nextLine();
@@ -134,7 +136,6 @@ public class Menu {
 
     private static String getMateriaAprobada(Scanner sc) {
         System.out.print("Ingrese la materia aprobada: ");
-        sc.nextLine();
         return sc.nextLine();
     }
 
