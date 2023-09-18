@@ -52,6 +52,7 @@ public class Menu {
 
                      //SI NO SE ENCUENTRA EL LEGAJO
                     } else {
+                        System.out.println("El legajo " + legajo + " no se encuentra en el diccionario.");
                         System.out.println("Ingrese el Nombre y Apellido del estudiante: ");
                         //LIMPIA EL BUFFER DEL SCANNER
                         sc.nextLine();
