@@ -122,17 +122,14 @@ public class Menu {
     }
 
     private static void cargarAlArchivo(Estudiante estudiante) {
-        try{
-            FileWriter fileWriter = new FileWriter(Lectura.path, true);
-            PrintWriter printWriter = new PrintWriter(fileWriter);
+        try(FileWriter fileWriter = new FileWriter(Lectura.path, true);
+         PrintWriter printWriter = new PrintWriter(fileWriter)) {
             printWriter.append("\n").append(estudiante.cadena());
-
-             
-
+      
         }catch (IOException e){
             System.out.println("Error en la escritura del archivo " + e);
         }
-        printWriter.close();
+        
     }
 
     private static String getMateriaAprobada(Scanner sc) {
